@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.top{
+    height: 150px;
+    background-color: rgb(130, 191, 244);
+    text-align: center;
+    align-content: center;
+    line-height: 10px;
+    max-height: 150px;
+}
+
+.person{
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    right: 1%;
+    top: 2%;
+
+    /* 訪客: https://669pic-img-server-02.oss-cn-hongkong.aliyuncs.com//element_min_new_pic/79/99/26/30/9395eb00c07e9d528cf76b9260e7aa94.png
+    男生: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlU9zjkd_gZqm6RcA70J3W23t4yJGcOhUJ8vSRQiOyEhx3ty5dDb4i0rhuZAhvgH3mgA&usqp=CAU
+    女生: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQul6cUgguGC_LWW8Vg7mvsBC-pS6LfaVNhW57O3MF352pjci8uO3mvaErbu_3bejzJLLg&usqp=CAU */
+}
