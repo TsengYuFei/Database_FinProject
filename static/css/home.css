@@ -1,0 +1,15 @@
+.primary{
+    display: flex;
+}
+
+.left{
+    width: 20%;
+    padding-left: 10px;
+    background-color: darkgoldenrod;
+}
+
+.right{
+    width: 80%;
+    padding-left: 10px;
+    background-color: darkviolet;
+}

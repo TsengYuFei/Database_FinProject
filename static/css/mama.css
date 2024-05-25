@@ -19,10 +19,12 @@ body{
     position: fixed;
     right: 1%;
     top: 2%;
+    background-color: white;
 
-    /* 訪客: https://669pic-img-server-02.oss-cn-hongkong.aliyuncs.com//element_min_new_pic/79/99/26/30/9395eb00c07e9d528cf76b9260e7aa94.png
+    /* 訪客: https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1198413935.jpg
     男生: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlU9zjkd_gZqm6RcA70J3W23t4yJGcOhUJ8vSRQiOyEhx3ty5dDb4i0rhuZAhvgH3mgA&usqp=CAU
-    女生: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQul6cUgguGC_LWW8Vg7mvsBC-pS6LfaVNhW57O3MF352pjci8uO3mvaErbu_3bejzJLLg&usqp=CAU */
+    女生: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQul6cUgguGC_LWW8Vg7mvsBC-pS6LfaVNhW57O3MF352pjci8uO3mvaErbu_3bejzJLLg&usqp=CAU
+    管理員: https://png.pngtree.com/png-vector/20191022/ourmid/pngtree-hammer-and-wrench-vector-illustration-with-simple-design-isolated-on-white-png-image_1846023.jpg */
 }
 
 .bottom{
