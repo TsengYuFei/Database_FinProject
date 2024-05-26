@@ -4,12 +4,13 @@
 
 .left{
     width: 20%;
-    padding-left: 10px;
-    background-color: darkgoldenrod;
 }
 
 .right{
     width: 80%;
+}
+
+.primary *{
     padding-left: 10px;
-    background-color: darkviolet;
+    color: darkorchid;
 }
