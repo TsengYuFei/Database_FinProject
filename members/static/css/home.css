@@ -13,3 +13,34 @@
 .primary *{
     padding-left: 10px;
 }
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.search-box input[type="text"] {
+    width: 100%;
+    padding-right: 40px; /* 添加空間給圖示 */
+    box-sizing: border-box;
+}
+
+.search-box button {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 0 0 0;
+    color: #333;
+}
+
+.search-box button:focus {
+    outline: none;
+}
+
