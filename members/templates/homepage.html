@@ -11,53 +11,50 @@
         <link rel="stylesheet" href="{% static 'css/home.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     {% endblock %}
+    
 </head>
 <body>
-    {% load static %}
     {% block person %}
         <img class="person" src="https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1198413935.jpg" alt="訪客頭">
     {% endblock %}
     {% block main %}
+        <script>
+            function validateForm() {
+                var query = document.getElementById('query').value;
+                if (query === '') {
+                    alert('請輸入關鍵字');
+                    return false;
+                }
+                return true;
+            }
+        </script>
         <div class="primary">
             <div class="left">
                <h3>書本查詢：</h3>
-               <form method="get">
-               <label for="search_by">搜尋類別</label>
-               <select id="search_by" name="search_by">
-                   <option value="title">書名</option>
-                   <option value="isbn">ISBN</option>
-                   <option value="author_last_name">姓</option>
-                   <option value="author_first_name">名</option>
-                   <option value="publisher">出版社</option>
-                </select>
-                <br>
-                {{ form.query }}
-                <div class="search-box">
-                    <input type="text" id="query" name="query" value="{{ request.GET.query|default_if_none:'' }}">
-                    <button type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-                </form>
+               <form method="get" action="{% url 'book_search' %}" onsubmit="return validateForm()">
+                   <label for="search_by">搜尋類別</label>
+                   <select id="search_by" name="search_by">
+                       <option value="title">書名</option>
+                       <option value="isbn">ISBN</option>
+                       <option value="author_last_name">姓</option>
+                       <option value="author_first_name">名</option>
+                       <option value="publisher">出版社</option>
+                   </select>
+                   <br>
+                   <!-- {{ form.query }} -->
+                   <div class="search-box">
+                       <input type="text" id="query" name="query" value="{{ request.GET.query|default_if_none:'' }}">
+                       <button type="submit">
+                           <i class="fa fa-search"></i>
+                       </button>
+                   </div>
+               </form>
                <br><hr><br>
                <h3>站點查詢：</h3>
                <p>//這裡放站點查詢輸入欄</p>
             </div>
             <div class="right">
-                {% if not request.GET.query %}
                 <p>//這裡等資料庫建好放書籍瀏覽gallery</p>
-                {% else %}
-                    {% if books %}
-                    <h3>搜索结果：</h3>
-                    <ul>
-                        {% for book in books %}
-                        <li>{{ book.title }} by {{ book.author }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                        <p>查無此書</p>
-                    {% endif %}
-                {% endif %}
             </div>
         </div>
     {% endblock %}

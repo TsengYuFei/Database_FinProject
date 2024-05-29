@@ -1,12 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
-from .models import Book
 from django.views.generic import ListView
+from .models import Book
+from .forms import BookSearchForm
 
 def home(request):
-    template = loader.get_template('homepage.html')
-    return HttpResponse(template.render())
+    form = BookSearchForm()
+    return render(request, 'homepage.html', {'form': form})
 
 class BookSearchView(ListView):
     model = Book
@@ -22,9 +21,14 @@ class BookSearchView(ListView):
             elif search_by == 'isbn':
                 return Book.objects.filter(isbn__icontains=query)
             elif search_by == 'author_last_name':
-                return Book.objects.filter(author_lname__icontains=query)
+                return Book.objects.filter(author_last_name__icontains=query)
             elif search_by == 'author_first_name':
-                return Book.objects.filter(author_fname__icontains=query)
+                return Book.objects.filter(author_first_name__icontains=query)
             elif search_by == 'publisher':
                 return Book.objects.filter(publisher__icontains=query)
         return Book.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = BookSearchForm(self.request.GET)
+        return context
