@@ -76,12 +76,23 @@ WSGI_APPLICATION = 'self_service_book.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'NAME': 'c07',                      
+#         'USER': 'yin',                      
+#         'PASSWORD': '093',               
+#         'HOST':'localhost',
+#         'PORT': '3306',                           
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'c07',                      
-        'USER': 'yin',                      
-        'PASSWORD': '093',               
+        'USER': 'Sophie',                      
+        'PASSWORD': '0826',               
         'HOST': 'localhost',                           
         'PORT': '3306',                           
     }
