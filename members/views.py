@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from .models import Book, BookAuthor
+from .models import Book
 from .forms import BookSearchForm
 
 def home(request):
@@ -21,9 +21,9 @@ class BookSearchView(ListView):
             elif search_by == 'isbn':
                 return Book.objects.filter(isbn__icontains=query)
             elif search_by == 'author_last_name':
-                return Book.objects.filter(bookauthor__ba_lname__icontains=query)
+                return Book.objects.filter(author_last_name__icontains=query)
             elif search_by == 'author_first_name':
-                return Book.objects.filter(bookauthor__ba_fname__icontains=query)
+                return Book.objects.filter(author_first_name__icontains=query)
             elif search_by == 'publisher':
                 return Book.objects.filter(publisher__icontains=query)
         return Book.objects.none()

@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import pymysql
-pymysql.install_as_MySQLdb()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'members',
-    'viewflow',
 ]
 
 MIDDLEWARE = [
@@ -78,45 +76,8 @@ WSGI_APPLICATION = 'self_service_book.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'c07',                      
-        'USER': 'yin',                      
-        'PASSWORD': '093',               
-        'HOST':'localhost',
-        'PORT': '3306',                           
-    }
-}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'c07',                      
-        'USER': 'Sophie',                      
-        'PASSWORD': '0826',               
-        'HOST': 'localhost',                           
-        'PORT': '3306',                           
-    }
-}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'c07',                      
-        'USER': 'soul',                      
-        'PASSWORD': '4612',               
-        'HOST': 'localhost',                           
-        'PORT': '3306',                           
-    }
-}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'c07',                      
-        'USER': 'hsuan',                      
-        'PASSWORD': '0713',               
-        'HOST': 'localhost',                           
-        'PORT': '3306',                           
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -155,13 +116,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+import os
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-import os
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'members', 'static'),
+]
 
 
 # Default primary key field type
