@@ -4,8 +4,8 @@ class BookSearchForm(forms.Form):
     SEARCH_CHOICES = [
         ('title', '書名'),
         ('isbn', 'ISBN'),
-        ('author_last_name', '姓'),
-        ('author_first_name', '名'),
+        ('lname', '姓'),
+        ('fname', '名'),
         ('publisher', '出版社'),
     ]
     search_by = forms.ChoiceField(choices=SEARCH_CHOICES, label='搜尋類別')

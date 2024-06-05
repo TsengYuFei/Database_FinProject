@@ -5,4 +5,5 @@ from .views import BookSearchView
 urlpatterns = [
     path('', views.home, name='home'),
     path('search/', BookSearchView.as_view(), name='book_search'),
+    path('station_search/', views.station_search, name='station_search'),
 ]

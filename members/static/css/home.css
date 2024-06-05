@@ -15,22 +15,22 @@
 }
 
 .search-box {
-    position: relative;
+    position:relative;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 185px;
     padding-top: 10px;
 }
 
 .search-box input[type="text"] {
-    width: 100%;
-    padding-right: 40px; /* 添加空間給圖示 */
+    width: calc(100% - 40px);
+    padding-right: 25px; /* 添加空間給圖示 */
     box-sizing: border-box;
 }
 
 .search-box button {
     position: absolute;
-    right: 10px;
+    right: 45px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -40,7 +40,59 @@
     color: #333;
 }
 
-.search-box button:focus {
+.search-box button:focus,
+.search-box-station button:focus  {
     outline: none;
 }
 
+.search-box-station {
+    position:relative;
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding-top: 10px;
+}
+
+.search-box-station button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding-left: 5px;
+    color: #333;
+}
+
+.station-table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-left: 10px;
+}
+
+.station-table th, .station-table td {
+    border: 1px solid #000000;
+    padding: 8px;
+}
+
+.station-table th {
+    background-color: #dfdada;
+    text-align: left;
+}
+
+.status-0::before {
+    content: ' ';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-1::before {
+    content: ' ';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    margin-right: 5px;
+}

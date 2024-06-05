@@ -37,15 +37,28 @@
            </form>
         </div>
         <div class="right">
-            {% if books %}
-                <h3>搜索结果：</h3>
-                <ul>
-                    {% for book in books %}
-                    <li>{{ book.title }} by {{ book.author.all|join:", " }}</li>
-                    {% endfor %}
-                </ul>
+            {% if stations %}
+                <h3>站點搜索結果：</h3>
+                <table class="station-table">
+                    <thead>
+                        <tr>
+                            <th>站名</th>
+                            <th>狀態</th>
+                            <th>地址</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for station in stations %}
+                        <tr>
+                            <td>{{ station.name }}</td>
+                            <td class="status-{{ station.statu }}">{{ station.get_statu_display }}</td>
+                            <td>{{ station.addr }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             {% else %}
-                <p>No books found.</p>
+                <p>No stations found.</p>
             {% endif %}
         </div>
     </div>

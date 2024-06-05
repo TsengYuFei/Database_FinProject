@@ -36,8 +36,8 @@
                    <select id="search_by" name="search_by">
                        <option value="title">書名</option>
                        <option value="isbn">ISBN</option>
-                       <option value="author_last_name">姓</option>
-                       <option value="author_first_name">名</option>
+                       <option value="lname">姓</option>
+                       <option value="fname">名</option>
                        <option value="publisher">出版社</option>
                    </select>
                    <br>
@@ -51,7 +51,18 @@
                </form>
                <br><hr><br>
                <h3>站點查詢：</h3>
-               <p>//這裡放站點查詢輸入欄</p>
+               <form method="get" action="{% url 'station_search' %}">
+                <div class="search-box-station">
+                    <label for="station_location">查詢地點</label>
+                    <select id="station_location" name="station_location">
+                        <option value="Taipei">臺北</option>
+                        <option value="Taichung">臺中</option>
+                    </select>
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
             </div>
             <div class="right">
                 <p>//這裡等資料庫建好放書籍瀏覽gallery</p>
