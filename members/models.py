@@ -62,7 +62,7 @@ class Author(models.Model):
 class Publisher(models.Model):
     # 出版社
     # Model: 出版社名稱
-    name = models.CharField(max_length=20, verbose_name='出版社名稱')
+    name = models.CharField(max_length=20, unique=True, verbose_name='出版社名稱')
 
     def __str__(self):
         return self.name
@@ -83,8 +83,8 @@ class Book(models.Model):
     img = models.ImageField(upload_to='book_images/', null=True, verbose_name='書本封面')
     statu = models.CharField(max_length=1, choices=statu_type, default="0", verbose_name='狀態')
     # 依statu判斷查看/更改會員或站點
-    member = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, related_name='books', verbose_name='會員')
-    station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, related_name='books', verbose_name='站點')
+    member = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, blank=True, related_name='books', verbose_name='會員')
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, null=True, blank=True, related_name='books', verbose_name='站點')
 
     def __str__(self):
         return self.title
