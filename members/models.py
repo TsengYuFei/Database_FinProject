@@ -52,6 +52,9 @@ class Author(models.Model):
     fname = models.CharField(max_length=20, verbose_name='名')
     lname = models.CharField(max_length=5, verbose_name='姓')
 
+    class Meta:
+        unique_together = ('fname', 'lname')    
+
     def __str__(self):
         # 顯示作者: "名 姓"
         return f"{self.fname} {self.lname}"
