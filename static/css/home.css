@@ -6,8 +6,22 @@
     width: 20%;
 }
 
+.left h3{
+    width: 100px;
+    background-color: rgb(130, 191, 244);
+}
+
 .right{
     width: 80%;
+    position: relative;
+    padding: 20px;
+}
+
+.book{
+    width: 250px;
+    height: auto;
+    padding: 0;
+    margin: 20px;
 }
 
 .primary *{

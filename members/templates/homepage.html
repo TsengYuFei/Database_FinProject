@@ -10,7 +10,7 @@
     <title>B&R Book</title>
     {% block loadcss %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"><!-- 對不起我不會亂刪了QQ -->
     {% endblock %}
 
 </head>
@@ -69,15 +69,10 @@
             </form>
         </div>
         <div class="right">
-            <h2>站內書籍</h2>
             {% if books %}
-            <ul>
                 {% for b in books %}
-                <li>
-                    <a href="{% url 'book_detail' b.id %}">{{ b.title }}</a> by {{ b.author.all|join:", " }}
-                </li>
+                <a href="{% url 'book_detail' b.id %}"><img class="book" src="{{ b.img.url }}" alt="{{ b.title }}的封面"></a>
                 {% endfor %}
-            </ul>
             {% else %}
             <p>目前暫無書籍可借閱</p>
             {% endif %}
