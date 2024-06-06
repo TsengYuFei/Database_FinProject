@@ -6,6 +6,9 @@
 <h2>{{ book.name }}</h2>
 <p>出版社: {{ book.publisher }}</p>
 <p>作者: {{ book.author.all|join:", " }}</p>
+<p>狀態: {{ book.get_statu_display }}</p>
+{% if book.statu == "0" %}
 <p>所在站點: {{ book.station.name }}</p>
 <p>站點位置: {{ book.station.addr }}</p>
+{% endif %}
 {% endblock%}

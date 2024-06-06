@@ -7,7 +7,7 @@ from .forms import BookSearchForm
 
 def home(request):
     form = BookSearchForm()
-    books = Book.objects.all().filter(statu = '0')
+    books = Book.objects.all()
     return render(request, 'homepage.html', {'form': form, 'books': books})
 
 class BookSearchView(ListView):
@@ -79,5 +79,15 @@ def book_detail(request, id):
     template = loader.get_template('book_detail.html')
     context = {
         'book': book,
+    }
+    return HttpResponse(template.render(context, request))
+
+def station_detail(request, id):
+    station = Station.objects.get(id = id)
+    books = station.books.all().filter(statu='0')
+    template = loader.get_template('station_detail.html')
+    context = {
+        'station': station,
+        'books': books,
     }
     return HttpResponse(template.render(context, request))

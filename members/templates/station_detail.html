@@ -1,0 +1,20 @@
+{% extends 'Mama.html' %}
+
+{% block main %}
+<h1>站點資訊</h1>
+<h2>{{ station.name }}</h2>
+<p></p>
+
+<h2>站內書籍</h2>
+{% if books %}
+<ul>
+    {% for book in books %}
+    <li>
+        <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a> by {{ book.author.all|join:", " }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>站內目前沒有書籍</p>
+{% endif %}
+{% endblock%}

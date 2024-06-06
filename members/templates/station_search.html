@@ -50,7 +50,7 @@
                     <tbody>
                         {% for station in stations %}
                         <tr>
-                            <td>{{ station.name }}</td>
+                            <td><a href="{% url 'station_detail' station.id %}">{{ station.name }}</a></td>
                             <td class="status-{{ station.statu }}">{{ station.get_statu_display }}</td>
                             <td>{{ station.addr }}</td>
                         </tr>
