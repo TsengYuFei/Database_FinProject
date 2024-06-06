@@ -74,3 +74,10 @@ def member_info(request):
     }
     return HttpResponse(template.render(context, request))
 
+def book_detail(request, id):
+    book = Book.objects.get(id = id)
+    template = loader.get_template('book_detail.html')
+    context = {
+        'book': book,
+    }
+    return HttpResponse(template.render(context, request))

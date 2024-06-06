@@ -1,0 +1,9 @@
+{% extends 'Mama.html' %}
+
+{% block main %}
+<h1>書籍資料</h1>
+<img src="{{ book.img.url }}" alt="book_img">
+<h2>{{ book.name }}</h2>
+<p>出版社: {{ book.publisher }}</p>
+<p>作者: {{ book.author.all|join:", " }}</p>
+{% endblock%}
