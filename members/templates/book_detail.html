@@ -2,8 +2,10 @@
 
 {% block main %}
 <h1>書籍資料</h1>
-<img src="{{ book.img.url }}" alt="book_img">
+<img src="{{ book.img.url }}" alt="book_img" style="width: 200px;">
 <h2>{{ book.name }}</h2>
 <p>出版社: {{ book.publisher }}</p>
 <p>作者: {{ book.author.all|join:", " }}</p>
+<p>所在站點: {{ book.station.name }}</p>
+<p>站點位置: {{ book.station.addr }}</p>
 {% endblock%}
