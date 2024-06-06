@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
-from .models import Book, Author, Publisher
+from django.http import HttpResponse
+from django.template import loader
+from .models import Administrator, Member, Station, Author, Publisher, Book
 from .forms import BookSearchForm
-from .models import Station
 
 def home(request):
     form = BookSearchForm()
-    return render(request, 'homepage.html', {'form': form})
+    books = Book.objects.all().filter(statu = '0')
+    return render(request, 'homepage.html', {'form': form, 'books': books})
 
 class BookSearchView(ListView):
     model = Book
@@ -53,3 +55,22 @@ def station_search(request):
     else:
         stations = Station.objects.none()
     return render(request, 'station_search.html', {'stations': stations})
+
+def member_info(request):
+    if request.method == "POST":
+        id = request.POST.get('book_id')
+        return_book = Book.objects.get(id=id)
+        return_book.statu = "0"
+        return_book.save()
+        return redirect('member_info')
+    member = Member.objects.get(fname="Jack")
+    borrowed_books = member.books.all()
+    borrowed_books = borrowed_books.filter(statu='1')
+
+    template = loader.get_template('member_info.html')
+    context = {
+        'member': member,
+        'borrowed_books': borrowed_books,
+    }
+    return HttpResponse(template.render(context, request))
+

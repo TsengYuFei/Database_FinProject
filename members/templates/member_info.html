@@ -1,0 +1,25 @@
+{% extends 'Mama.html' %}
+
+{% block main %}
+<h1>會員中心</h1>
+<h2>{{ member.fname }} {{ member.lname }}</h2>
+<p>電話: {{ member.phone }}</p>
+
+<h2>已借書籍</h2>
+{% if borrowed_books %}
+<ul>
+    {% for book in borrowed_books %}
+    <li>
+        {{ book.title }} by {{ book.author.all|join:", " }}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="book_id" value="{{ book.id }}">
+            <button type="submit">還書</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>您還沒有借閱書籍</p>
+{% endif %}
+{% endblock%}
