@@ -3,6 +3,7 @@
 {% block main %}
 <h1>站點資訊</h1>
 <h2>{{ station.name }}</h2>
+
 <p></p>
 
 <h2>站內書籍</h2>
@@ -17,4 +18,9 @@
 {% else %}
 <p>站內目前沒有書籍</p>
 {% endif %}
+<!-- 管理員的部分-->
+{% if request.user.is_superuser %}
+    <p><a href="{% url 'admin:members_station_change' station.id %}">編輯「{{ station.name }} 」此站點</a></p>
+{% endif %}
+<!-- --------->
 {% endblock%}

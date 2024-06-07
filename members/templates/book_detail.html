@@ -3,7 +3,7 @@
 {% block main %}
 <h1>書籍資料</h1>
 <img src="{{ book.img.url }}" alt="book_img" style="width: 200px;">
-<h2>{{ book.name }}</h2>
+<h2>{{ book.title }}</h2>
 <p>出版社: {{ book.publisher }}</p>
 <p>作者: {{ book.author.all|join:", " }}</p>
 <p>狀態: {{ book.get_statu_display }}</p>
@@ -11,4 +11,9 @@
 <p>所在站點: {{ book.station.name }}</p>
 <p>站點位置: {{ book.station.addr }}</p>
 {% endif %}
+<!-- 管理員的部分-->
+{% if request.user.is_superuser %}
+    <p><a href="{% url 'admin:members_book_change' book.id %}">編輯「{{ book.title }} 」此書</a></p>
+{% endif %}
+<!-- --------->
 {% endblock%}
