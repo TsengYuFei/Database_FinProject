@@ -10,7 +10,7 @@
     <title>B&R Book</title>
     {% block loadcss %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"><!-- 對不起我不會亂刪了QQ -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     {% endblock %}
 
 </head>
@@ -21,35 +21,88 @@
             src="https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1198413935.jpg" alt="訪客頭"></a>
     {% endblock %}
     {% block main %}
-    <script>
-        function validateForm() {
-            var query = document.getElementById('query').value;
-            if (query === '') {
-                alert('請輸入關鍵字');
-                return false;
-            }
-            return true;
-        }
-    </script>
     <div class="primary">
         <div class="left">
             <h3>書本查詢：</h3>
+            <script>
+                function sanitizeInput() {
+                    const fields = ['title_query', 'isbn_query', 'lname_query', 'fname_query', 'publisher_query'];
+                    fields.forEach(field => {
+                        const input = document.getElementById(field);
+                        if (input) {
+                            input.value = input.value.trim().replace(/\s+/g, ' '); // 去除多餘的空格
+                        }
+                    });
+                }
+
+                function validateForm() {
+                    const checkboxes = [
+                        document.getElementById('search_by_title'),
+                        document.getElementById('search_by_isbn'),
+                        document.getElementById('search_by_lname'),
+                        document.getElementById('search_by_fname'),
+                        document.getElementById('search_by_publisher')
+                    ];
+                    const inputs = [
+                        document.getElementById('title_query'),
+                        document.getElementById('isbn_query'),
+                        document.getElementById('lname_query'),
+                        document.getElementById('fname_query'),
+                        document.getElementById('publisher_query')
+                    ];
+
+                    const anyChecked = checkboxes.some(checkbox => checkbox.checked);
+                    const anyInputProvided = inputs.some((input, index) => {
+                        return checkboxes[index].checked && input.value.trim() !== '';
+                    });
+
+                    if (!anyChecked) {
+                        alert('請勾選查詢種類');
+                        return false;
+                    }
+
+                    if (anyChecked && !anyInputProvided) {
+                        alert('請輸入查詢資訊');
+                        return false;
+                    }
+
+                    sanitizeInput();
+                    return true;
+                }
+            </script>
             <form method="get" action="{% url 'book_search' %}" onsubmit="return validateForm()">
-                <label for="search_by">搜尋類別</label>
-                <select id="search_by" name="search_by">
-                    <option value="title">書名</option>
-                    <option value="isbn">ISBN</option>
-                    <option value="lname">姓</option>
-                    <option value="fname">名</option>
-                    <option value="publisher">出版社</option>
-                </select>
-                <br>
-                <!-- {{ form.query }} -->
+                <div>
+                    <input type="checkbox" id="search_by_title" name="search_by_title">
+                    <label for="search_by_title">書名</label>
+                    <input type="text" id="title_query" name="title_query"
+                        value="{{ request.GET.title_query|default_if_none:'' }}">
+                </div>
+                <div>
+                    <input type="checkbox" id="search_by_isbn" name="search_by_isbn">
+                    <label for="search_by_isbn">ISBN</label>
+                    <input type="text" id="isbn_query" name="isbn_query"
+                        value="{{ request.GET.isbn_query|default_if_none:'' }}">
+                </div>
+                <div>
+                    <input type="checkbox" id="search_by_lname" name="search_by_lname">
+                    <label for="search_by_lname">姓</label>
+                    <input type="text" id="lname_query" name="lname_query"
+                        value="{{ request.GET.lname_query|default_if_none:'' }}">
+                </div>
+                <div>
+                    <input type="checkbox" id="search_by_fname" name="search_by_fname">
+                    <label for="search_by_fname">名</label>
+                    <input type="text" id="fname_query" name="fname_query"
+                        value="{{ request.GET.fname_query|default_if_none:'' }}">
+                </div>
+                <div>
+                    <input type="checkbox" id="search_by_publisher" name="search_by_publisher">
+                    <label for="search_by_publisher">出版社</label>
+                    <input type="text" id="publisher_query" name="publisher_query"
+                        value="{{ request.GET.publisher_query|default_if_none:'' }}">
+                </div>
                 <div class="search-box">
-                    <input type="text" id="query" name="query" value="{{ request.GET.query|default_if_none:'' }}">
-                    <button type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
+                    <button type="submit">查詢</button>
                 </div>
             </form>
             <br>
@@ -67,13 +120,12 @@
                     </button>
                 </div>
             </form>
-            <h3></h3>
         </div>
         <div class="right">
             {% if books %}
-                {% for b in books %}
-                <a href="{% url 'book_detail' b.id %}"><img class="book" src="{{ b.img.url }}" alt="{{ b.title }}的封面"></a>
-                {% endfor %}
+            {% for b in books %}
+            <a href="{% url 'book_detail' b.id %}"><img class="book" src="{{ b.img.url }}" alt="{{ b.title }}的封面"></a>
+            {% endfor %}
             {% else %}
             <p>目前暫無書籍可借閱</p>
             {% endif %}

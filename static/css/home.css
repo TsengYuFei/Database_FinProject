@@ -29,32 +29,10 @@
 }
 
 .search-box {
-    position:relative;
-    display: flex;
-    align-items: center;
-    width: 185px;
-    padding-top: 10px;
+    padding-top: 5px;
+    padding-left: 15px;
 }
 
-.search-box input[type="text"] {
-    width: calc(100% - 40px);
-    padding-right: 25px; /* 添加空間給圖示 */
-    box-sizing: border-box;
-}
-
-.search-box button {
-    position: absolute;
-    right: 45px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 10px 0 0 0;
-    color: #333;
-}
-
-.search-box button:focus,
 .search-box-station button:focus  {
     outline: none;
 }

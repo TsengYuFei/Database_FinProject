@@ -8,5 +8,5 @@ class BookSearchForm(forms.Form):
         ('fname', '名'),
         ('publisher', '出版社'),
     ]
-    search_by = forms.ChoiceField(choices=SEARCH_CHOICES, label='搜尋類別')
+    search_by = forms.MultipleChoiceField(choices=SEARCH_CHOICES, widget=forms.CheckboxSelectMultiple, required=False)
     query = forms.CharField(max_length=25, required=False)

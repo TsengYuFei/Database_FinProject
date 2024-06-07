@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.template import loader
@@ -21,36 +22,35 @@ class BookSearchView(ListView):
     context_object_name = 'books'
 
     def get_queryset(self):
-        search_by = self.request.GET.get('search_by')
-        query = self.request.GET.get('query')
-        if query:
-            if search_by == 'title':
-                return Book.objects.filter(title__icontains=query)
-            elif search_by == 'isbn':
-                return Book.objects.filter(isbn__icontains=query)
-            elif search_by == 'lname':
-                return Book.objects.filter(author__lname__icontains=query)
-            elif search_by == 'fname':
-                return Book.objects.filter(author__fname__icontains=query)
-            elif search_by == 'publisher':
-                return Book.objects.filter(publisher__name__icontains=query)
-        return Book.objects.none()
+        queryset = Book.objects.all()
+
+        title_query = self.request.GET.get('title_query')
+        isbn_query = self.request.GET.get('isbn_query')
+        lname_query = self.request.GET.get('lname_query')
+        fname_query = self.request.GET.get('fname_query')
+        publisher_query = self.request.GET.get('publisher_query')
+
+        if title_query and 'search_by_title' in self.request.GET:
+            queryset = queryset.filter(title__icontains=title_query)
+        if isbn_query and 'search_by_isbn' in self.request.GET:
+            queryset = queryset.filter(isbn__icontains=isbn_query)
+        if lname_query and 'search_by_lname' in self.request.GET:
+            queryset = queryset.filter(author__lname__icontains=lname_query)
+        if fname_query and 'search_by_fname' in self.request.GET:
+            queryset = queryset.filter(author__fname__icontains=fname_query)
+        if publisher_query and 'search_by_publisher' in self.request.GET:
+            publisher_query = publisher_query.strip()  # 移除空格
+            publisher_query_parts = publisher_query.split()  # 分詞
+            query = Q()
+            for part in publisher_query_parts:
+                query |= Q(publisher__name__icontains=part)  # 用 OR 來查詢所有部分
+            queryset = queryset.filter(query)
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = BookSearchForm(self.request.GET)
-
-        search_by = self.request.GET.get('search_by')
-        query = self.request.GET.get('query')
-
-        if query:
-            if search_by in ['lname', 'fname']:  # 检查是否是搜索作者
-                authors = Author.objects.filter(**{'%s__icontains' % search_by: query})
-                context['results'] = authors
-            elif search_by == 'publisher':  # 检查是否是搜索出版商
-                publishers = Publisher.objects.filter(name__icontains=query)
-                context['results'] = publishers
-
+        context['request'] = self.request
         return context
 
 def station_search(request):
