@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.template import loader
@@ -40,12 +39,7 @@ class BookSearchView(ListView):
             queryset = queryset.filter(author__fname__icontains=fname_query)
         if publisher_query and 'search_by_publisher' in self.request.GET:
             publisher_query = publisher_query.strip()  # 移除空格
-            publisher_query_parts = publisher_query.split()  # 分詞
-            query = Q()
-            for part in publisher_query_parts:
-                query |= Q(publisher__name__icontains=part)  # 用 OR 來查詢所有部分
-            queryset = queryset.filter(query)
-
+            queryset = queryset.filter(publisher__name__iexact=publisher_query) # 返回與輸入的出版社名稱完全匹配的書籍
         return queryset
 
     def get_context_data(self, **kwargs):
