@@ -2,13 +2,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth.decorators import login_required
 from .models import Administrator, Member, Station, Author, Publisher, Book
 from .forms import BookSearchForm
 
 def home(request):
     form = BookSearchForm()
     books = Book.objects.all()
-    return render(request, 'homepage.html', {'form': form, 'books': books})
+    context = {
+        'form': form,
+        'books': books,
+    }
+    return render(request, 'homepage.html', context)
 
 class BookSearchView(ListView):
     model = Book
@@ -56,6 +61,7 @@ def station_search(request):
         stations = Station.objects.none()
     return render(request, 'station_search.html', {'stations': stations})
 
+@login_required
 def member_info(request):
     if request.method == "POST":
         id = request.POST.get('book_id')
@@ -63,31 +69,27 @@ def member_info(request):
         return_book.statu = "0"
         return_book.save()
         return redirect('member_info')
-    member = Member.objects.get(fname="Jack")
-    borrowed_books = member.books.all()
-    borrowed_books = borrowed_books.filter(statu='1')
+    member = Member.objects.get(user=request.user)
+    borrowed_books = member.books.filter(statu='1')
 
-    template = loader.get_template('member_info.html')
     context = {
         'member': member,
         'borrowed_books': borrowed_books,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'member_info.html', context)
 
 def book_detail(request, id):
     book = Book.objects.get(id = id)
-    template = loader.get_template('book_detail.html')
     context = {
         'book': book,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'book_detail.html', context)
 
 def station_detail(request, id):
     station = Station.objects.get(id = id)
-    books = station.books.all().filter(statu='0')
-    template = loader.get_template('station_detail.html')
+    books = station.books.filter(statu='0')
     context = {
         'station': station,
         'books': books,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'station_detail.html', context)
