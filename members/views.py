@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Administrator, Member, Station, Author, Publisher, Book
 from .forms import BookSearchForm
@@ -73,9 +74,24 @@ def member_info(request):
     return render(request, 'member_info.html', context)
 
 def book_detail(request, id):
+    borrow_success = False
+    if request.method == "POST":
+        member = Member.objects.get(user=request.user)
+        id = request.POST.get('book_id')
+        return_book = Book.objects.get(id=id)
+        return_book.statu = "1"
+        return_book.member = member
+        return_book.save()
+        borrow_success = True
+        context = {
+            'book': book,
+            'borrow_success': borrow_success,
+        }
+        return render(request, 'book_detail.html', context)
     book = Book.objects.get(id = id)
     context = {
         'book': book,
+        'borrow_success': borrow_success,
     }
     return render(request, 'book_detail.html', context)
 

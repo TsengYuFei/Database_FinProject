@@ -10,19 +10,34 @@
 
 <!-- 管理員的部分-->
 {% if request.user.is_superuser %}
-    {% if book.statu == "1" %}
-        <p>借閱人:{{ book.member }}</p>
-    {% endif %}
+{% if book.statu == "1" %}
+<p>借閱人:{{ book.member }}</p>
+{% endif %}
 {% endif %}
 <!-- --------->
 
 {% if book.statu == "0" %}
 <p>所在站點: {{ book.station.name }}</p>
 <p>站點位置: {{ book.station.addr }}</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="book_id" value="{{ book.id }}">
+    <button type="submit">借書</button>
+</form>
 {% endif %}
+
+<!-- 借書成功的話跳出成功訊息 -->
+{% if borrow_success %}
+<script>
+    window.onload = function () {
+        alert("書籍 '{{ book.title }}' 借閱成功!\n借閱人: {{ book.member }}");
+    }
+</script>
+{% endif %}
+
 <!-- 管理員的部分-->
 {% if request.user.is_superuser %}
-    <p><a href="{% url 'admin:members_book_change' book.id %}">編輯「{{ book.title }} 」此書</a></p>
+<p><a href="{% url 'admin:members_book_change' book.id %}">編輯「{{ book.title }} 」此書</a></p>
 {% endif %}
 <!-- --------->
 {% endblock%}
