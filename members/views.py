@@ -18,6 +18,10 @@ def home(request):
     }
     return render(request, 'homepage.html', context)
 
+def superuser_logout(request):
+    auth_logout(request)
+    return redirect('home')
+
 class BookSearchView(ListView):
     model = Book
     template_name = 'book_search.html'
@@ -60,6 +64,8 @@ def station_search(request):
 
 @login_required
 def member_info(request):
+    if request.user.is_superuser:
+            return redirect('home')
     if request.method == "POST":
         id = request.POST.get('book_id')
         return_book = Book.objects.get(id=id)
@@ -78,12 +84,16 @@ def member_info(request):
 def book_detail(request, id):
     borrow_success = False
     if request.method == "POST":
+        if request.user.is_superuser:
+            return redirect('book_detail', id=id)
+        if not request.user.is_authenticated:
+            return redirect('login')
         member = Member.objects.get(user=request.user)
         id = request.POST.get('book_id')
-        return_book = Book.objects.get(id=id)
-        return_book.statu = "1"
-        return_book.member = member
-        return_book.save()
+        book = Book.objects.get(id=id)
+        book.statu = "1"
+        book.member = member
+        book.save()
         borrow_success = True
         context = {
             'book': book,

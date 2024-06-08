@@ -37,6 +37,7 @@
 
 <!-- 管理員的部分-->
 {% if request.user.is_superuser %}
+<p style="color: #f00;">管理員不能借書!!</p>
 <p><a href="{% url 'admin:members_book_change' book.id %}">編輯「{{ book.title }} 」此書</a></p>
 {% endif %}
 <!-- --------->
