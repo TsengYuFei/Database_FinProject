@@ -17,16 +17,30 @@
         <h3>Self-Service Borrowing and Returning Books.</h3>
     </div>
 
-    {% block person %}{% endblock %}
+    <a href="{% url 'member_info' %}">
+        {% if request.user.is_superuser %}
+            <img class="person" src="https://png.pngtree.com/png-vector/20191022/ourmid/pngtree-hammer-and-wrench-vector-illustration-with-simple-design-isolated-on-white-png-image_1846023.jpg" alt="管理員">
+            <p style="color: #f00; position: absolute; top: 75px; right: 10px;">管理員不能使用<br>訪客登入功能!!!</p>
+        {% elif request.user.is_authenticated %}
+            {% if member and member.sex == 'F' %}
+                <img class="person" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQul6cUgguGC_LWW8Vg7mvsBC-pS6LfaVNhW57O3MF352pjci8uO3mvaErbu_3bejzJLLg&usqp=CAU" alt="女會員">
+            {% elif member and member.sex == 'M' %}
+                <img class="person" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlU9zjkd_gZqm6RcA70J3W23t4yJGcOhUJ8vSRQiOyEhx3ty5dDb4i0rhuZAhvgH3mgA&usqp=CAU" alt="男會員">
+            {% endif %}
+        {% else %}
+            <img class="person" src="https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1198413935.jpg" alt="訪客頭">
+        {% endif %}
+    </a>
     <!-- 這邊放右上角頭像，圖案幫找好在css裡了，class="person"-->
 
-    <div>{% block main %}{% endblock%}</div>
+    {% block home %}{% endblock%}
+    <div class="mid">{% block main %}{% endblock%}</div>
 
 
     <div class="bottom">
         <p>R&B Book自助借還書管理系統</p>
         <p>維護員：曾予菲、許尹瑄、詹亦萱、陳螢貞、李宸儀</p>
-        <p>沒有聯絡專線，有問題也請不要找我們，謝謝。</p>
+        <p>沒有聯絡專線，有問題也請不要找我們，謝謝。</p><br>
         {% if request.user.is_superuser %}
             <p><a href="{% url 'superuser_logout' %}">管理員登出</a> | <a href="\admin">進入管理介面</a>|<a href="\">回首頁</a></p>
         {%else%}

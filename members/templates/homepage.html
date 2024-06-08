@@ -16,14 +16,7 @@
 </head>
 
 <body>
-    {% block person %}
-    <a href="{% url 'member_info' %}"><img class="person"
-            src="https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1198413935.jpg" alt="訪客頭"></a>
-    {% if request.user.is_superuser %}
-    <p style="color: #f00; position: fixed; top: 75px; right: 10px;">管理員不能使<br>用訪客登入!!</p>
-    {% endif %}
-    {% endblock %}
-    {% block main %}
+    {% block home %}
     <div class="primary">
         <div class="left">
             <h3>書本查詢：</h3>

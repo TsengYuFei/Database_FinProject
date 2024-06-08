@@ -16,10 +16,11 @@ body{
     border-radius: 50%;
     width: 70px;
     height: 70px;
-    position: fixed;
+    position: absolute;
     right: 1%;
     top: 2%;
     background-color: white;
+    z-index: 100;
 
     /* 訪客: https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1198413935.jpg
     男生: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlU9zjkd_gZqm6RcA70J3W23t4yJGcOhUJ8vSRQiOyEhx3ty5dDb4i0rhuZAhvgH3mgA&usqp=CAU
@@ -36,4 +37,9 @@ body{
     font-size: smaller;
     line-height: 1px;
     font-weight: bold;
+}
+
+.mid{
+    padding: 50px;
+    text-align: left;
 }

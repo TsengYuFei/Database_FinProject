@@ -1,5 +1,13 @@
 {% extends 'Mama.html' %}
 
+{% block loadcss %}
+    <style>
+        body{
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
 {% block main %}
 <h1>站點資訊</h1>
 <h2>{{ station.name }}</h2>

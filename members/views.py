@@ -12,9 +12,16 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 def home(request):
     form = BookSearchForm()
     books = Book.objects.all()
+    member = None
+    if request.user.is_authenticated:
+        try:
+            member = Member.objects.get(user=request.user)
+        except Member.DoesNotExist:
+            pass
     context = {
         'form': form,
         'books': books,
+        'member': member,
     }
     return render(request, 'homepage.html', context)
 
