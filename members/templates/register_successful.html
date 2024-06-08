@@ -1,0 +1,16 @@
+{% extends 'Mama.html' %}
+
+{% load static %}
+{% block loadcss %}
+    <link rel="stylesheet" href="{% static 'css/register_successful.css' %}">
+{% endblock %}
+
+{% block person %}{% endblock %}
+
+{% block main %}
+<div class="register_successful-container">
+    <h1>註冊成功！</h1>
+    <form method="post" action="{% url 'register_successful' %}">
+    <p><a href="{% url 'home' %}">回首頁</a></p>
+</div>
+{% endblock %}

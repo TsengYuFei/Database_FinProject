@@ -1,0 +1,32 @@
+{% extends 'Mama.html' %}
+
+{% load static %}
+{% block loadcss %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block person %}{% endblock %}
+
+{% block main %}
+<div class="login-container">
+    <h2>會員登入</h2>
+    {% if messages %}
+        
+            {% for message in messages %}
+                {{ message }}  
+            {% endfor %}
+        
+    {% endif %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <label for="username">帳號:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">密碼:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">登入</button>
+    </form>
+    <p>沒有帳號? <a href="{% url 'register' %}">註冊會員</a></p>
+    <p><a href="{% url 'home' %}">回首頁</a></p>
+    </p>
+</div>
+{% endblock %}

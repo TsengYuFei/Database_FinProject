@@ -29,6 +29,7 @@ class Member(models.Model):
     lname = models.CharField(max_length=5, verbose_name='姓')
     sex = models.CharField(max_length=1, choices=sex_type, null=True, verbose_name='性別')
 
+
     # 連結user
     user = models.OneToOneField(User, on_delete=models.CASCADE, default= None, blank=True, null=True)
 

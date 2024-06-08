@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Administrator, Member, Station, Author, Publisher, Book
 from .forms import BookSearchForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 def home(request):
     form = BookSearchForm()
@@ -103,3 +105,58 @@ def station_detail(request, id):
         'books': books,
     }
     return render(request, 'station_detail.html', context)
+
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('login_successful')
+        else:
+            messages.error(request, '帳號或密碼錯誤')
+    return render(request, 'login.html')
+
+def login_successful(request):
+    return render(request, 'login_successful.html')
+
+def register(request):
+    if request.method == 'POST':
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        phone = request.POST['phone']
+        ssn = request.POST['ssn']
+        sex = request.POST['sex']
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        if User.objects.filter(username=username).exists():
+            messages.error(request, '帳號已存在，請嘗試其他帳號或登入現有帳號')
+            return redirect('login')
+        
+        if Member.objects.filter(phone=phone).exists():
+            messages.error(request, '電話號碼已存在，請嘗試其他電話號碼')
+            return redirect('register')
+        
+        if Member.objects.filter(ssn=ssn).exists():
+            messages.error(request, '身分證號碼已存在，請嘗試其他身分證號碼')
+            return redirect('register')
+        
+        user = User.objects.create_user(username=username, password=password)
+        user.save()
+        new_member = Member(user=user, fname=fname, lname=lname, ssn=ssn, phone=phone, sex=sex)
+        new_member.save()
+        
+        return redirect('register_successful')
+    
+    return render(request, 'register.html')
+
+
+def register_successful(request):
+    return render(request, 'register_successful.html')
+
+def logout(request):
+    auth_logout(request)
+    return redirect('home')
