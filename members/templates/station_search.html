@@ -22,18 +22,26 @@
             function validateForm() {
                 const checkboxes = [
                     document.getElementById('search_by_title'),
-                    document.getElementById('search_by_isbn'),
-                    document.getElementById('search_by_lname'),
-                    document.getElementById('search_by_fname'),
-                    document.getElementById('search_by_publisher')
-                ];
-                const inputs = [
+                        document.getElementById('search_by_isbn'),
+                        document.getElementById('search_by_lname'),
+                        document.getElementById('search_by_fname'),
+                        document.getElementById('search_by_publisher'),
+                        document.getElementById('search_by_ssn'),
+                        document.getElementById('search_by_lname'),
+                        document.getElementById('search_by_fname'),
+                        document.getElementById('search_by_phone')
+                    ];
+                    const inputs = [
                     document.getElementById('title_query'),
-                    document.getElementById('isbn_query'),
-                    document.getElementById('lname_query'),
-                    document.getElementById('fname_query'),
-                    document.getElementById('publisher_query')
-                ];
+                        document.getElementById('isbn_query'),
+                        document.getElementById('lname_query'),
+                        document.getElementById('fname_query'),
+                        document.getElementById('publisher_query'),
+                        document.getElementById('ssn_query'),
+                        document.getElementById('lname_query'),
+                        document.getElementById('fname_query'),
+                        document.getElementById('phone_query')
+                    ];
 
                 const anyChecked = checkboxes.some(checkbox => checkbox.checked);
                 const anyInputProvided = inputs.some((input, index) => {
@@ -104,6 +112,95 @@
                 </button>
             </div>
         </form>
+        <br><hr>
+            
+        {% if request.user.is_superuser %}    
+        <h3>會員查詢：</h3>
+            <script>
+                function sanitizeInput() {
+                    const fields = ['mssn_query','mlname_query', 'mfname_query', 'mphone_query'];
+                    fields.forEach(field => {
+                        const input = document.getElementById(field);
+                        if (input) {
+                            input.value = input.value.trim().replace(/\s+/g, ' '); // 去除多餘的空格
+                        }
+                    });
+                }
+    
+                function validateForm() {
+                    const checkboxes = [
+                    document.getElementById('search_by_title'),
+                        document.getElementById('search_by_isbn'),
+                        document.getElementById('search_by_lname'),
+                        document.getElementById('search_by_fname'),
+                        document.getElementById('search_by_publisher'),
+                        document.getElementById('search_by_mssn'),
+                        document.getElementById('search_by_mlname'),
+                        document.getElementById('search_by_mfname'),
+                        document.getElementById('search_by_mphone')
+                    ];
+                    const inputs = [
+                    document.getElementById('title_query'),
+                        document.getElementById('isbn_query'),
+                        document.getElementById('lname_query'),
+                        document.getElementById('fname_query'),
+                        document.getElementById('publisher_query'),
+                        document.getElementById('mssn_query'),
+                        document.getElementById('mlname_query'),
+                        document.getElementById('mfname_query'),
+                        document.getElementById('mphone_query')
+                    ];
+    
+                    const anyChecked = checkboxes.some(checkbox => checkbox.checked);
+                    const anyInputProvided = inputs.some((input, index) => {
+                        return checkboxes[index].checked && input.value.trim() !== '';
+                    });
+    
+                    if (!anyChecked) {
+                        alert('請勾選查詢種類');
+                        return false;
+                    }
+    
+                    if (anyChecked && !anyInputProvided) {
+                        alert('請輸入查詢資訊');
+                        return false;
+                    }
+    
+                    sanitizeInput();
+                    return true;
+                }
+            </script>
+            <form method="get" action="{% url 'member_search' %}" onsubmit="return validateForm()">
+                <div>
+                    <input type="checkbox" id="search_by_mssn" name="search_by_mssn">
+                    <label for="search_by_mssn">身分證</label>
+                    <input type="text" id="mssn_query" name="mssn_query"
+                        value="{{ request.GET.mssn_query|default_if_none:'' }}">
+                </div>
+                <div>
+                    <input type="checkbox" id="search_by_mlname" name="search_by_mlname">
+                    <label for="search_by_mlname">姓</label>
+                    <input type="text" id="mlname_query" name="mlname_query"
+                        value="{{ request.GET.mlname_query|default_if_none:'' }}">
+                </div>
+                <div>
+                    <input type="checkbox" id="search_by_mfname" name="search_by_mfname">
+                    <label for="search_by_mfname">名</label>
+                    <input type="text" id="mfname_query" name="mfname_query"
+                        value="{{ request.GET.mfname_query|default_if_none:'' }}">
+                </div>
+                <div>
+                    <input type="checkbox" id="search_by_mphone" name="search_by_mphone">
+                    <label for="search_by_mphone">電話</label>
+                    <input type="text" id="mphone_query" name="mphone_query"
+                        value="{{ request.GET.mphone_query|default_if_none:'' }}">
+                </div>
+                <div class="search-box">
+                    <button type="submit">查詢</button>
+                </div>
+            </form>
+        {% endif %}
+
     </div>
     <div class="right">
         {% if stations %}

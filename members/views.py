@@ -61,6 +61,53 @@ class BookSearchView(ListView):
         context['request'] = self.request
         return context
 
+
+
+class MemberSearchView(ListView):
+    model = Member
+    template_name = 'member_search.html'
+    context_object_name = 'members'
+
+    def get_queryset(self):
+        queryset = Member.objects.all()
+
+        mssn_query = self.request.GET.get('mssn_query')
+        mlname_query = self.request.GET.get('mlname_query')
+        mfname_query = self.request.GET.get('mfname_query')
+        mphone_query = self.request.GET.get('mphone_query')
+
+        if mssn_query and 'search_by_mssn' in self.request.GET:
+            queryset = queryset.filter(ssn__icontains=mssn_query)
+        if mlname_query and 'search_by_mlname' in self.request.GET:
+            queryset = queryset.filter(lname__icontains=mlname_query)
+        if mfname_query and 'search_by_mfname' in self.request.GET:
+            queryset = queryset.filter(fname__icontains=mfname_query)
+        if mphone_query and 'search_by_mphone' in self.request.GET:
+            queryset = queryset.filter(phone__icontains=mphone_query)
+        return queryset
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['request'] = self.request
+        return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def station_search(request):
     location = request.GET.get('station_location')
     if location:

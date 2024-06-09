@@ -10,3 +10,13 @@ class BookSearchForm(forms.Form):
     ]
     search_by = forms.MultipleChoiceField(choices=SEARCH_CHOICES, widget=forms.CheckboxSelectMultiple, required=False)
     query = forms.CharField(max_length=25, required=False)
+
+class MemberSearchForm(forms.Form):
+    SEARCH_CHOICES = [
+        ('mssn', '身分證'),
+        ('mlname', '姓'),
+        ('mfname', '名'),
+        ('mphone', '電話'),
+    ]
+    search_by = forms.MultipleChoiceField(choices=SEARCH_CHOICES, widget=forms.CheckboxSelectMultiple, required=False)
+    query = forms.CharField(max_length=25, required=False)

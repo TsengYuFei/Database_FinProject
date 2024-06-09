@@ -112,7 +112,9 @@
                 </button>
             </div>
         </form>
+
         <br><hr>
+            
         {% if request.user.is_superuser %}    
         <h3>會員查詢：</h3>
             <script>
@@ -199,17 +201,20 @@
                 </div>
             </form>
         {% endif %}
+
     </div>
     <div class="right">
-        {% if books %}
+        {% if members %}
         <h3>搜索結果：</h3>
-        {% for book in books %}
-        <a href="{% url 'book_detail' book.id %}">
-            <img class="book" src="{{ book.img.url }}" alt="{{ book.title }}的封面">
+        {% for member in members %}
+        <a href="">
+            <ul>
+                <li><a href="/admin/members/member/{{member.id}}/change/">{{member.fname}} {{member.lname}}</a></li>
+            </ul>
         </a>
         {% endfor %}
         {% else %}
-        <p>查無相關書籍</p>
+        <p>查無相關會員</p>
         {% endif %}
     </div>
 </div>
